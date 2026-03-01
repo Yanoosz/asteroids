@@ -30,10 +30,8 @@ class Asteroid(CircleShape):
 
         new_radius = self.radius - ASTEROID_MIN_RADIUS
         # Type checker needs help understanding that self.position is a Vector2
-        # pyright: ignore[reportAttributeAccessIssue]
         asteroid1 = Asteroid(self.position.x, self.position.y, new_radius)  # pyright: ignore[reportAttributeAccessIssue]
         asteroid1.velocity = a * 1.2
-        # pyright: ignore[reportAttributeAccessIssue]
         asteroid2 = Asteroid(self.position.x, self.position.y, new_radius)  # pyright: ignore[reportAttributeAccessIssue]
         asteroid2.velocity = b * 1.2
 

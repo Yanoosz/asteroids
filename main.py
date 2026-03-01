@@ -25,7 +25,6 @@ def main():
     shots = pygame.sprite.Group()
 
     # Type checker suppression for pygame dynamic attributes - these are valid in pygame
-    # pyright: ignore[reportAttributeAccessIssue]
     Asteroid.containers = (asteroids, updatable, drawable)  # pyright: ignore[reportAttributeAccessIssue]
     Shot.containers = (shots, updatable, drawable)  # pyright: ignore[reportAttributeAccessIssue]
     Asteroid.containers = (asteroids, updatable, drawable)  # pyright: ignore[reportAttributeAccessIssue]
@@ -35,7 +34,6 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     # Create the asteroid field (added to updatable group, updated automatically)
-    # Variable intentionally unused as it's managed through sprite groups
     _asteroid_field = AsteroidField()  # pyright: ignore[reportUnusedVariable]
 
     # Create an initial asteroid to ensure there's something to interact with
