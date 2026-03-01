@@ -22,13 +22,14 @@ def main():
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
 
-    Asteroid.containers = (asteroids, updatable, drawable)
-    Shot.containers = (shots, updatable, drawable)
-    Asteroid.containers = (asteroids, updatable, drawable)
-    AsteroidField.containers = updatable
-    asteroid_field = AsteroidField()
+    # Type checker suppression for pygame dynamic attributes - these are valid in pygame
+    # pyright: ignore[reportAttributeAccessIssue]
+    Asteroid.containers = (asteroids, updatable, drawable)  # pyright: ignore[reportAttributeAccessIssue]
+    Shot.containers = (shots, updatable, drawable)  # pyright: ignore[reportAttributeAccessIssue]
+    Asteroid.containers = (asteroids, updatable, drawable)  # pyright: ignore[reportAttributeAccessIssue]
+    AsteroidField.containers = updatable  # pyright: ignore[reportAttributeAccessIssue]
 
-    Player.containers = (updatable, drawable)
+    Player.containers = (updatable, drawable)  # pyright: ignore[reportAttributeAccessIssue]
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     dt = 0

@@ -38,7 +38,13 @@ class AsteroidField(pygame.sprite.Sprite):
     ]
 
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self, self.containers)
+        # Initialize with containers if set, otherwise initialize without
+        # We use getattr with a default of None to avoid AttributeError
+        containers = getattr(self, "containers", None)
+        if containers is not None:
+            pygame.sprite.Sprite.__init__(self, containers)
+        else:
+            pygame.sprite.Sprite.__init__(self)
         self.spawn_timer = 0.0
 
     def spawn(self, radius, position, velocity):

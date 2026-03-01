@@ -1,4 +1,5 @@
 import pygame
+from pygame import Vector2
 
 from circleshape import CircleShape
 from constants import (
@@ -16,14 +17,16 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
+        # Type hint for position to help type checker
+        self.position: Vector2
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
-        a = self.position + forward * self.radius
-        b = self.position - forward * self.radius - right
-        c = self.position - forward * self.radius + right
-        return [a, b, c]
+        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * (self.radius / 1.5)
+        a = self.position + (forward * self.radius)  # pyright: ignore[reportOperatorIssue]
+        b = self.position - (forward * self.radius) - right  # pyright: ignore[reportOperatorIssue]
+        c = self.position - (forward * self.radius) + right  # pyright: ignore[reportOperatorIssue]
+        return [(point.x, point.y) for point in (a, b, c)]
 
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
