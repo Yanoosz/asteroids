@@ -1,4 +1,5 @@
 import random
+from typing import List
 
 import pygame
 
@@ -16,11 +17,11 @@ class Asteroid(CircleShape):
     def update(self, dt):
         self.position += self.velocity * dt
 
-    def split(self):
+    def split(self) -> List["Asteroid"]:
         self.kill()
 
         if self.radius <= ASTEROID_MIN_RADIUS:
-            return
+            return []  # No new asteroids created
 
         random_angle = random.uniform(20, 50)
 
@@ -28,7 +29,13 @@ class Asteroid(CircleShape):
         b = self.velocity.rotate(-random_angle)
 
         new_radius = self.radius - ASTEROID_MIN_RADIUS
+        # Type checker needs help understanding that self.position is a Vector2
+        # pyright: ignore[reportAttributeAccessIssue]
         asteroid1 = Asteroid(self.position.x, self.position.y, new_radius)  # pyright: ignore[reportAttributeAccessIssue]
         asteroid1.velocity = a * 1.2
+        # pyright: ignore[reportAttributeAccessIssue]
         asteroid2 = Asteroid(self.position.x, self.position.y, new_radius)  # pyright: ignore[reportAttributeAccessIssue]
         asteroid2.velocity = b * 1.2
+
+        # Return the new asteroids so they can be used for effects
+        return [asteroid1, asteroid2]
