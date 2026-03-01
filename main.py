@@ -1,13 +1,18 @@
 import sys
+
 import pygame
-from constants import *
-from player import Player
-from circleshape import CircleShape
-from asteroids import Asteroid
+
 from asteroidfield import AsteroidField
+from asteroids import Asteroid
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH
+from player import Player
 from shots import Shot
 
+
 def main():
+    print(
+        f"Starting Asteroids with pygame version: {pygame.version.ver}\nScreen width: 1280\nScreen height: 720"
+    )
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
@@ -20,7 +25,7 @@ def main():
     Asteroid.containers = (asteroids, updatable, drawable)
     Shot.containers = (shots, updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
-    AsteroidField.containers = (updatable)
+    AsteroidField.containers = updatable
     asteroid_field = AsteroidField()
 
     Player.containers = (updatable, drawable)
@@ -55,6 +60,7 @@ def main():
         pygame.display.flip()
 
         dt = clock.tick(60) / 1000
+
 
 if __name__ == "__main__":
     main()
