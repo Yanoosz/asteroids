@@ -3,3 +3,4 @@ __pycache__/
 game_state.jsonl
 .DS_Store
 *.jsonl
+.claude/
