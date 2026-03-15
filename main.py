@@ -7,6 +7,7 @@ from asteroids import Asteroid
 from background import StarfieldBackground
 from constants import ASTEROID_MIN_RADIUS, SCREEN_HEIGHT, SCREEN_WIDTH
 from particles import ParticleManager
+from logger import log_event, log_state
 from player import Player
 from shots import Shot
 
@@ -64,6 +65,12 @@ def main():
                     )
                     # Get the new asteroids from split (if any)
                     new_asteroids = asteroid.split()
+                    log_event(
+                        "asteroid_hit",
+                        pos=[asteroid.position.x, asteroid.position.y],
+                        radius=asteroid.radius,
+                        split=len(new_asteroids) > 0,
+                    )
                     # Add explosion effects for the new asteroids if any were created
                     for new_asteroid in new_asteroids:
                         particle_manager.add_explosion(
@@ -84,6 +91,11 @@ def main():
 
         for asteroid in asteroids:
             if asteroid.collisions(player):
+                log_event(
+                    "game_over",
+                    player_pos=[player.position.x, player.position.y],
+                    asteroid_pos=[asteroid.position.x, asteroid.position.y],
+                )
                 print("Game over!")
                 sys.exit()
 
@@ -97,6 +109,8 @@ def main():
             obj.draw(screen)
 
         pygame.display.flip()
+
+        log_state()
 
         dt = clock.tick(60) / 1000
 
